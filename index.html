@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthony's Portfolio</title>
+    <style>
+        :root {
+            --bg: #ecfdf8;
+            --card: rgba(255, 255, 255, 0.88);
+            --text: #17313a;
+            --muted: #4c6470;
+            --accent: #2a9d8f;
+            --accent-2: #f4a261;
+            --shadow: 0 12px 30px rgba(23, 49, 58, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(42, 157, 143, 0.18), transparent 34%),
+                radial-gradient(circle at top right, rgba(244, 162, 97, 0.18), transparent 30%),
+                linear-gradient(180deg, #dff7f1 0%, var(--bg) 35%, #f8fffd 100%);
+        }
+
+        .page {
+            width: min(960px, calc(100% - 32px));
+            margin: 24px auto 40px;
+        }
+
+        .hero,
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(23, 49, 58, 0.08);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(6px);
+        }
+
+        .hero {
+            padding: 22px 24px;
+            border-left: 8px solid var(--accent);
+            margin-bottom: 18px;
+            animation: liftIn 0.7s ease both;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.05;
+            color: var(--accent);
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--muted);
+            max-width: 60ch;
+        }
+
+        .card {
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: liftIn 0.7s ease both;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 34px rgba(23, 49, 58, 0.16);
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: var(--text);
+            font-size: 1.25rem;
+        }
+
+        p {
+            margin: 0 0 10px;
+            color: var(--muted);
+        }
+
+        ul,
+        ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        a:hover {
+            color: #1f6f67;
+            text-decoration: underline;
+        }
+
+        .project-note {
+            margin-top: 6px;
+        }
+
+        .project-item {
+            margin-bottom: 14px;
+            padding-left: 6px;
+            border-left: 3px solid rgba(42, 157, 143, 0.25);
+        }
+
+        .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        @keyframes liftIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                width: min(100% - 20px, 960px);
+                margin-top: 10px;
+            }
+
+            .hero,
+            .card {
+                padding: 16px;
+                border-radius: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="hero">
+            <h1>My Portfolio</h1>
+            <h2>Welcome to my portfolio website. Here you will find information about my projects and skills.</h2>
+        </section>
+
+        <section class="card">
+            <h3>About Me</h3>
+            <p>My name is Anthony and I want to begin learning web development and software engineering. I learn Java at home and HTML at school. My dad is also a software engineer so he helps me learn new things. I want to become a software engineer in the future and work for a big tech company.</p>
+            <p>Away from coding and education, i want to learn how to cook food, and i want to cook food for myself or for my friends/parents.</p>
+            <p>My favourite thing to do in ICT, is working on my godot game, i really like it and enjoy, when i make it, i actually feel like a game designer in a big company</p>
+        </section>
+
+        <section class="card">
+            <h3>My favourite things</h3>
+            <ul>
+                <li>Playing video games</li>
+                <li>Learning new programming languages</li>
+                <li>Eating</li>
+                <li>Spending time with family and friends</li>
+                <li>sleeping</li>
+            </ul>
+        </section>
+        
+        <section class="card">
+            <h3>My Projects</h3>
+            <div class="project-item">
+                <p><a href="https://learning-dok.lovable.app/" target="_blank" rel="noopener noreferrer">LearningDOK</a></p>
+                <p class="project-note">LearningDOK is a web application that helps students learn and practice their Depth of Knowledge (DOK) skills. It provides a variety of interactive activities and quizzes to help students improve their critical thinking and problem-solving abilities.</p>
+            </div>
+            <div class="project-item">
+                <p><a href="https://mini-games-weld.vercel.app/" target="_blank" rel="noopener noreferrer">Gaming Arcade</a></p>
+                <p class="project-note">This is a gaming arcade, about shooter and army games, like tanks, planes, fps shooters. My favourite game there is Rust&Wrap, i took time on it and added sounds</p>
+            </div>
+            <div class="project-item">
+                <p>Godot Game PIH2</p>
+                <p class="project-note">A game i was working on godot engine, a game about pig world fighting against villains that wants to take over the world,</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h3>Favourite TV shows</h3>
+            <ol>
+                <li>The boys</li>
+                <li>Squid Game</li>
+            </ol>
+        </section>
+
+        <section class="card">
+            <h3>My favourite games</h3>
+            <ol>
+                <li>Insurgency Sandstorm</li>
+                <p>Fun fact, pih2 was inspired by insurgency sandstorm, i wanted to make a game like it but with pigs, so i made pih2</p>
+                <li>Gta V</li>
+                <li>Counter Strike Global Offensive</li>
+                <li>Minecraft</li>
+            </ol>
+        </section>
+    </main>
+
+    
+    
+    
+    
+    
+</body>
+</html>
