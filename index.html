@@ -1,311 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">  
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anthony's Portfolio</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Sora:wght@400;600;700&display=swap');
-
-        :root {
-            --bg: #0d1118;
-            --bg-2: #121926;
-            --card: rgba(20, 29, 44, 0.88);
-            --text: #e9edf7;
-            --muted: #a9b4c8;
-            --accent: #ff7a18;
-            --accent-2: #1ba2ff;
-            --line: rgba(233, 237, 247, 0.12);
-            --shadow: 0 14px 36px rgba(5, 9, 16, 0.45);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Sora', 'Segoe UI', sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at 10% 8%, rgba(27, 162, 255, 0.18), transparent 40%),
-                radial-gradient(circle at 90% 16%, rgba(255, 122, 24, 0.16), transparent 34%),
-                linear-gradient(150deg, var(--bg) 0%, var(--bg-2) 45%, #0b1220 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            z-index: -1;
-            inset: 0;
-            background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 34px 34px;
-            pointer-events: none;
-        }
-
-        .page {
-            width: min(1120px, calc(100% - 32px));
-            margin: 24px auto 44px;
-            display: grid;
-            gap: 14px;
-            grid-template-columns: 1.25fr 0.85fr;
-            grid-template-areas:
-                "hero hero"
-                "about favourite"
-                "projects tv"
-                "projects games";
-        }
-
-        .hero,
-        .card {
-            background: var(--card);
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(6px);
-        }
-
-        .hero {
-            grid-area: hero;
-            padding: 22px 24px;
-            border-left: 6px solid var(--accent);
-            background:
-                linear-gradient(120deg, rgba(255, 122, 24, 0.12), rgba(27, 162, 255, 0.09)),
-                var(--card);
-            animation: liftIn 0.7s ease both;
-        }
-
-        h1 {
-            margin: 0 0 8px;
-            font-family: 'Rajdhani', 'Trebuchet MS', sans-serif;
-            font-size: clamp(2.1rem, 4.2vw, 3.1rem);
-            line-height: 1;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--text);
-        }
-
-        h2 {
-            margin: 0;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--muted);
-            max-width: 68ch;
-        }
-
-        .hero-tag {
-            margin: 0 0 10px;
-            display: inline-block;
-            font-family: 'Rajdhani', 'Trebuchet MS', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #e6f4ff;
-            background: linear-gradient(90deg, #154472, #1a5f98);
-            border: 1px solid rgba(27, 162, 255, 0.35);
-            border-radius: 999px;
-            padding: 6px 12px;
-        }
-
-        .card {
-            padding: 16px 18px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            animation: liftIn 0.7s ease both;
-            border-top: 3px solid rgba(27, 162, 255, 0.42);
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 18px 34px rgba(5, 9, 16, 0.58);
-        }
-
-        .card h3 {
-            margin: 0 0 10px;
-            font-family: 'Rajdhani', 'Trebuchet MS', sans-serif;
-            color: #f2f6ff;
-            font-size: 1.36rem;
-            letter-spacing: 0.02em;
-            text-transform: uppercase;
-        }
-
-        p {
-            margin: 0 0 10px;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        ul,
-        ol {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-            color: #d2dbeb;
-        }
-
-        a {
-            color: #5bc0ff;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        a:hover {
-            color: #9ad8ff;
-            text-decoration: underline;
-        }
-
-        .project-note {
-            margin-top: 6px;
-        }
-
-        .project-item {
-            margin-bottom: 14px;
-            padding-left: 10px;
-            border-left: 3px solid rgba(255, 122, 24, 0.6);
-        }
-
-        .project-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .about {
-            grid-area: about;
-        }
-
-        .favourite {
-            grid-area: favourite;
-        }
-
-        .projects {
-            grid-area: projects;
-            border-top-color: rgba(255, 122, 24, 0.6);
-        }
-
-        .tv {
-            grid-area: tv;
-        }
-
-        .games {
-            grid-area: games;
-        }
-
-        .card:nth-of-type(1) { animation-delay: 0.06s; }
-        .card:nth-of-type(2) { animation-delay: 0.12s; }
-        .card:nth-of-type(3) { animation-delay: 0.18s; }
-        .card:nth-of-type(4) { animation-delay: 0.24s; }
-        .card:nth-of-type(5) { animation-delay: 0.3s; }
-
-        @keyframes liftIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 820px) {
-            .page {
-                width: min(100% - 20px, 960px);
-                margin-top: 12px;
-                grid-template-columns: 1fr;
-                grid-template-areas:
-                    "hero"
-                    "about"
-                    "favourite"
-                    "projects"
-                    "tv"
-                    "games";
-            }
-
-            .hero,
-            .card {
-                padding: 16px;
-                border-radius: 10px;
-            }
-
-            h2 {
-                font-size: 1rem;
-            }
-        }
-    </style>
+    <title>Anthony's Final Portfolio</title>
 </head>
 <body>
-    <main class="page">
-        <section class="hero">
-            <p class="hero-tag">Student Developer</p>
-            <h1>My Portfolio</h1>
-            <h2>Welcome to my portfolio website. Here you will find information about my projects and skills.</h2>
-        </section>
+    <h1>About me</h1>
+    <p>My name is Anthony, and I want to learn coding and become a software engineer. I enjoy writing code, and solving problems with code, I don't enjoy making design and prefer to focus on the technical aspects of development.</p>
 
-        <section class="card about">
-            <h3>About Me</h3>
-            <p>My name is Anthony and I want to begin learning web development and software engineering. I learn Java at home and HTML at school. My dad is also a software engineer so he helps me learn new things. I want to become a software engineer in the future and work for a big tech company.</p>
-            <p>Away from coding and education, i want to learn how to cook food, and i want to cook food for myself or for my friends/parents.</p>
-            <p>My favourite thing to do in ICT, is working on my godot game, i really like it and enjoy, when i make it, i actually feel like a game designer in a big company</p>
-        </section>
-
-        <section class="card favourite">
-            <h3>My favourite things</h3>
-            <ul>
-                <li>Playing video games</li>
-                <li>Learning new programming languages</li>
-                <li>Eating</li>
-                <li>Spending time with family and friends</li>
-                <li>sleeping</li>
-            </ul>
-        </section>
+    <h1>Projects</h1>
+    <h2>Lovable project</h2>
+    <ol>
+        <li><a href="https://learning-dok.lovable.app/" target="_blank">Lovable Learning Dok</a></li>
         
-        <section class="card projects">
-            <h3>My Projects</h3>
-            <div class="project-item">
-                <p><a href="https://learning-dok.lovable.app/" target="_blank" rel="noopener noreferrer">LearningDOK</a></p>
-                <p class="project-note">LearningDOK is a web application that helps students learn and practice their Depth of Knowledge (DOK) skills. It provides a variety of interactive activities and quizzes to help students improve their critical thinking and problem-solving abilities.</p>
-            </div>
-            <div class="project-item">
-                <p><a href="https://mini-games-weld.vercel.app/" target="_blank" rel="noopener noreferrer">Gaming Arcade</a></p>
-                <p class="project-note">This is a gaming arcade, about shooter and army games, like tanks, planes, fps shooters. My favourite game there is Rust&Wrap, i took time on it and added sounds</p>
-            </div>
-            <div class="project-item">
-                <p>Godot Game PIH2</p>
-                <p class="project-note">A game i was working on godot engine, a game about pig world fighting against villains that wants to take over the world,</p>
-            </div>
-        </section>
+    </ol>
+    <p>This project is a documentation website for the Lovable Learning platform. It provides comprehensive guides and resources for users to learn how to use the platform effectively.</p>
+    
+    <h2>Game Arcade</h2>
+    <ol>
+        <li><a href="mini-games-weld.vercel.app" target="_blank">Game Arcade</a></li>
+    </ol>
+    <p>This project is about millitary wave games, basicly how many waves can you survive, it has simple zombie game, tanks, planes, and sandbox graphic game</p>
 
-        <section class="card tv">
-            <h3>Favourite TV shows</h3>
-            <ol>
-                <li>The boys</li>
-                <li>Squid Game</li>
-            </ol>
-        </section>
+    <h2>Figma</h2>
+    <ol>
+        <li><a href="https://www.figma.com/design/k3Fjvp79lurxMzykJCS02m/UzbekFood?node-id=0-1&t=DpxY6NEY96T8MQI4-1" target="_blank">Figma Project</a></li>
+    </ol>
+    <p>This is a simple design project, about online shop of national food of uzbekistan, you can order food, manage your cart, and even get a receipt!</p>
 
-        <section class="card games">
-            <h3>My favourite games</h3>
-            <ol>
-                <li>Insurgency Sandstorm</li>
-                <li>Fun fact: PIH2 was inspired by Insurgency Sandstorm. I wanted to make a game like it but with pigs, so I made PIH2.</li>
-                <li>Gta V</li>
-                <li>Counter Strike Global Offensive</li>
-                <li>Minecraft</li>
-            </ol>
-        </section>
-    </main>
+    <h2>Pih 2</h2>
+    <ol>
+        <li><a href="https://drive.google.com/file/d/1lq6448D7SHrDt7bRschp_7l3zRt_09aV/view?usp=sharing" target="_blank">Pih 2 download</a></li>
+    </ol>
+    <p>INSTRUCTION! click on the link and just download, it will take you around 30 - 60 seconds, after you download EXTRACT ALL!, then click on the exe, and enjoy!</p>
+    <p>This is my, final GODOT project, it's a long 3 chapters story game, about a pig saving a world, from bunch of villains! it has epic music, guns, and epic cut scenes! This game will test your skills, because enemy one shots you! but you have a gun, so you can one shot them!</p>
 
-    
-    
-    
-    
+    <h1>The reflection Page</h1>
+    <h2>Highlights</h2>
+    <p>from all of the projects, mostly i enjoyed making godot Pih 2, i enjoyed writing a code, and creating a story, lots of people tested my game and they liked it, saying it has a nice story. As I said about me, i like writing a code, so i wrote a code with a little help, and designed all levels by myself</p>
+    <h2>The Process</h2> 
+    <p>I learned that if i will chat and distract myself, i will not be able to finish anything, which proved my other project, but on my final project, i locked in completely, which gave me a motivation to finally show up as a good example in Mr.Degroot's class</p>
+    <h2>The friction</h2>
+    <p>The biggest challange i faced, was the final export of the game, there was a problem with script, which was fixed and playable only on exe file. Another challange was to follow a tutorial on certain codes, like cutscenes, portals, and especially making enemies</p>
+
+    <h1>Inquiry questions</h1>
+    <h2>AI tools</h2>
+    <p> Once when i started making a project, i used a lot of AI for code work, because i didn't even understand Syntax, but soon, as much as i used using AI, and following tutorials, i finally learned the Syntax, and sometimes even corrected AI! Later i used AI only for background, and images</p>
+    <h2>next steps</h2>
+    <p>if i had 2 more weeks, i would have added more dlc, continueing the story, and answering the un answered questions. Also i would,ve add one more ending, or different type of enemy, like shooting one, or demolition</p>
+
     
 </body>
 </html>
