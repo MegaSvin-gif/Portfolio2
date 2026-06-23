@@ -4,52 +4,533 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anthony's Final Portfolio</title>
+    <style>
+        :root {
+            --bg: #07111f;
+            --panel-border: rgba(148, 163, 184, 0.18);
+            --text: #e5eefb;
+            --muted: #9fb1cc;
+            --accent: #7dd3fc;
+            --accent-2: #c084fc;
+            --accent-3: #34d399;
+            --shadow: 0 24px 80px rgba(2, 6, 23, 0.55);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(125, 211, 252, 0.24), transparent 32%),
+                radial-gradient(circle at top right, rgba(192, 132, 252, 0.18), transparent 28%),
+                linear-gradient(160deg, #020617 0%, #081226 48%, #0f172a 100%);
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 36px 36px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 95%);
+            opacity: 0.45;
+        }
+
+        .shell {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            padding: 28px;
+            border: 1px solid var(--panel-border);
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(8, 15, 30, 0.74));
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(125, 211, 252, 0.24), transparent 70%);
+            top: -120px;
+            right: -110px;
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(125, 211, 252, 0.24);
+            background: rgba(125, 211, 252, 0.08);
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+            gap: 24px;
+            align-items: center;
+            margin-top: 18px;
+        }
+
+        h1, h2, h3, p {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: clamp(2.3rem, 5vw, 4.7rem);
+            line-height: 0.98;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 1.02rem;
+            max-width: 62ch;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .button {
+            appearance: none;
+            border: 0;
+            border-radius: 999px;
+            padding: 14px 20px;
+            font: inherit;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, color 160ms ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button-primary {
+            color: #00111a;
+            background: linear-gradient(135deg, #7dd3fc, #34d399);
+            box-shadow: 0 18px 30px rgba(52, 211, 153, 0.18);
+        }
+
+        .button-secondary {
+            color: var(--text);
+            background: rgba(148, 163, 184, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .hero-card {
+            padding: 22px;
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.62), rgba(15, 23, 42, 0.86));
+            border: 1px solid rgba(148, 163, 184, 0.15);
+        }
+
+        .hero-card h2 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .hero-card p {
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stat {
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.14);
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .tabs {
+            margin-top: 22px;
+            padding: 12px;
+            border-radius: 22px;
+            border: 1px solid var(--panel-border);
+            background: rgba(8, 15, 30, 0.68);
+            backdrop-filter: blur(14px);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-button {
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--muted);
+            border-radius: 999px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+            transition: 160ms ease;
+        }
+
+        .tab-button:hover {
+            color: var(--text);
+            background: rgba(148, 163, 184, 0.08);
+        }
+
+        .tab-button[aria-selected="true"] {
+            color: #00111a;
+            background: linear-gradient(135deg, #7dd3fc, #c084fc);
+            box-shadow: 0 12px 26px rgba(125, 211, 252, 0.2);
+        }
+
+        .panels {
+            margin-top: 18px;
+        }
+
+        .panel {
+            display: none;
+            padding: 26px;
+            border-radius: 26px;
+            border: 1px solid var(--panel-border);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.78));
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        .panel.active {
+            display: block;
+            animation: fadeUp 220ms ease;
+        }
+
+        .panel h2 {
+            font-size: clamp(1.5rem, 2vw, 2rem);
+            margin-bottom: 12px;
+        }
+
+        .panel p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .project-card, .info-card {
+            padding: 18px;
+            border-radius: 20px;
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.14);
+        }
+
+        .project-card h3, .info-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .project-card p, .info-card p {
+            margin-bottom: 0;
+        }
+
+        .project-link {
+            display: inline-flex;
+            margin-top: 14px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-link span {
+            color: var(--accent);
+        }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .badge {
+            padding: 9px 12px;
+            border-radius: 999px;
+            background: rgba(125, 211, 252, 0.1);
+            border: 1px solid rgba(125, 211, 252, 0.16);
+            color: var(--text);
+            font-size: 0.92rem;
+        }
+
+        .list {
+            margin: 16px 0 0;
+            padding-left: 20px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .list li + li {
+            margin-top: 10px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                line-height: 1.02;
+            }
+
+            .panel, .hero {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>About me</h1>
-    <p>My name is Anthony, and I want to learn coding and become a software engineer. I enjoy writing code, and solving problems with code, I don't enjoy making design and prefer to focus on the technical aspects of development.</p>
+    <main class="shell">
+        <section class="hero">
+            <div class="eyebrow">Portfolio // Anthony</div>
+            <div class="hero-grid">
+                <div>
+                    <h1>Anthony's ICT portfolio</h1>
+                    <p>
+                        My name is Anthony, and I want to learn coding and become a software engineer.
+                        I enjoy solving problems with code, building projects, and sharing what I learned.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#projects" id="myProjectsButton">My Projects</a>
+                        <button class="button button-secondary" type="button" data-tab-target="about">About Me</button>
+                    </div>
+                </div>
+                <aside class="hero-card">
+                    <h2>What is inside</h2>
+                    <p>
+                        Use the tabs below to move between About Me, Projects, Reflection, and Inquiry Questions.
+                        This keeps everything in one polished page while still feeling like separate pages.
+                    </p>
+                    <div class="stats">
+                        <div class="stat">
+                            <strong>4</strong>
+                            <span>tab sections</span>
+                        </div>
+                        <div class="stat">
+                            <strong>1</strong>
+                            <span>portfolio story</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
 
-    <h1>Projects</h1>
-    <h2>Lovable project</h2>
-    <ol>
-        <li><a href="https://learning-dok.lovable.app/" target="_blank">Lovable Learning Dok</a></li>
-        
-    </ol>
-    <p>This project is a documentation website for the Lovable Learning platform. It provides comprehensive guides and resources for users to learn how to use the platform effectively.</p>
-    
-    <h2>Game Arcade</h2>
-    <ol>
-        <li><a href="mini-games-weld.vercel.app" target="_blank">Game Arcade</a></li>
-    </ol>
-    <p>This project is about millitary wave games, basicly how many waves can you survive, it has simple zombie game, tanks, planes, and sandbox graphic game</p>
+        <nav class="tabs" aria-label="Portfolio sections">
+            <button class="tab-button" type="button" data-tab="about" aria-selected="true">About Me</button>
+            <button class="tab-button" type="button" data-tab="projects" aria-selected="false">Projects</button>
+            <button class="tab-button" type="button" data-tab="reflection" aria-selected="false">Reflection</button>
+            <button class="tab-button" type="button" data-tab="inquiry" aria-selected="false">Inquiry Questions</button>
+        </nav>
 
-    <h2>Figma</h2>
-    <ol>
-        <li><a href="https://www.figma.com/design/k3Fjvp79lurxMzykJCS02m/UzbekFood?node-id=0-1&t=DpxY6NEY96T8MQI4-1" target="_blank">Figma Project</a></li>
-    </ol>
-    <p>This is a simple design project, about online shop of national food of uzbekistan, you can order food, manage your cart, and even get a receipt!</p>
+        <div class="panels">
+            <section class="panel active" id="about" data-panel="about">
+                <h2>About Me</h2>
+                <p>
+                    My name is Anthony, and I want to learn coding and become a software engineer.
+                    I enjoy writing code and solving problems with code. I like the technical side of development
+                    and want to keep improving through projects.
+                </p>
+                <div class="badge-list">
+                    <span class="badge">Coding</span>
+                    <span class="badge">Problem solving</span>
+                    <span class="badge">Software engineering</span>
+                    <span class="badge">Technical focus</span>
+                </div>
+            </section>
 
-    <h2>Pih 2</h2>
-    <ol>
-        <li><a href="https://drive.google.com/file/d/1lq6448D7SHrDt7bRschp_7l3zRt_09aV/view?usp=sharing" target="_blank">Pih 2 download</a></li>
-    </ol>
-    <p>INSTRUCTION! click on the link and just download, it will take you around 30 - 60 seconds, after you download EXTRACT ALL!, then click on the exe, and enjoy!</p>
-    <p>This is my, final GODOT project, it's a long 3 chapters story game, about a pig saving a world, from bunch of villains! it has epic music, guns, and epic cut scenes! This game will test your skills, because enemy one shots you! but you have a gun, so you can one shot them!</p>
+            <section class="panel" id="projects" data-panel="projects">
+                <h2>Projects</h2>
+                <p>
+                    These are the projects I built and presented. Click any project to open it.
+                </p>
+                <div class="section-grid">
+                    <article class="project-card">
+                        <h3>Lovable Learning Dok</h3>
+                        <p>A documentation website for the Lovable Learning platform with guides and resources for users.</p>
+                        <a class="project-link" href="https://learning-dok.lovable.app/" target="_blank" rel="noreferrer">Open project <span>↗</span></a>
+                    </article>
 
-    <h1>The reflection Page</h1>
-    <h2>Highlights</h2>
-    <p>from all of the projects, mostly i enjoyed making godot Pih 2, i enjoyed writing a code, and creating a story, lots of people tested my game and they liked it, saying it has a nice story. As I said about me, i like writing a code, so i wrote a code with a little help, and designed all levels by myself</p>
-    <h2>The Process</h2> 
-    <p>I learned that if i will chat and distract myself, i will not be able to finish anything, which proved my other project, but on my final project, i locked in completely, which gave me a motivation to finally show up as a good example in Mr.Degroot's class</p>
-    <h2>The friction</h2>
-    <p>The biggest challange i faced, was the final export of the game, there was a problem with script, which was fixed and playable only on exe file. Another challange was to follow a tutorial on certain codes, like cutscenes, portals, and especially making enemies</p>
+                    <article class="project-card">
+                        <h3>Game Arcade</h3>
+                        <p>A wave-survival game with zombie, tank, plane, and sandbox-style gameplay.</p>
+                        <a class="project-link" href="https://mini-games-weld.vercel.app" target="_blank" rel="noreferrer">Open project <span>↗</span></a>
+                    </article>
 
-    <h1>Inquiry questions</h1>
-    <h2>AI tools</h2>
-    <p> Once when i started making a project, i used a lot of AI for code work, because i didn't even understand Syntax, but soon, as much as i used using AI, and following tutorials, i finally learned the Syntax, and sometimes even corrected AI! Later i used AI only for background, and images</p>
-    <h2>next steps</h2>
-    <p>if i had 2 more weeks, i would have added more dlc, continueing the story, and answering the un answered questions. Also i would,ve add one more ending, or different type of enemy, like shooting one, or demolition</p>
+                    <article class="project-card">
+                        <h3>Figma Project</h3>
+                        <p>An online food shop design for Uzbek national food, including cart, ordering, and receipt flow.</p>
+                        <a class="project-link" href="https://www.figma.com/design/k3Fjvp79lurxMzykJCS02m/UzbekFood?node-id=0-1&t=DpxY6NEY96T8MQI4-1" target="_blank" rel="noreferrer">Open project <span>↗</span></a>
+                    </article>
 
-    
+                    <article class="project-card">
+                        <h3>Pih 2</h3>
+                        <p>A final Godot project with a story, combat, music, and cinematic cutscenes.</p>
+                        <a class="project-link" href="https://drive.google.com/file/d/1lq6448D7SHrDt7bRschp_7l3zRt_09aV/view?usp=sharing" target="_blank" rel="noreferrer">Download project <span>↗</span></a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel" id="reflection" data-panel="reflection">
+                <h2>Reflection</h2>
+                <div class="section-grid">
+                    <div class="info-card">
+                        <h3>Highlights</h3>
+                        <p>
+                            The project I enjoyed most was Godot Pih 2. I liked writing code, creating the story,
+                            and building the levels myself. People who tested it said the story was strong.
+                        </p>
+                    </div>
+                    <div class="info-card">
+                        <h3>The Process</h3>
+                        <p>
+                            I learned that if I distract myself, I stop finishing work. On the final project I stayed focused,
+                            which helped me finish and show better work in class.
+                        </p>
+                    </div>
+                    <div class="info-card">
+                        <h3>The Friction</h3>
+                        <p>
+                            The biggest challenge was export issues in Godot and learning tricky features like cutscenes,
+                            portals, and enemies from tutorials.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="inquiry" data-panel="inquiry">
+                <h2>Inquiry Questions</h2>
+                <div class="section-grid">
+                    <div class="info-card">
+                        <h3>AI Tools</h3>
+                        <p>
+                            At the start I used a lot of AI because I did not fully understand syntax. Over time,
+                            I learned more, followed tutorials, and even corrected AI sometimes. Later I used AI mostly
+                            for background ideas and images.
+                        </p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Next Steps</h3>
+                        <p>
+                            If I had two more weeks, I would add more DLC, continue the story, answer unanswered questions,
+                            and add another ending or a different enemy type.
+                        </p>
+                    </div>
+                </div>
+                <ul class="list">
+                    <li>Keep improving coding skills through new projects.</li>
+                    <li>Build cleaner design and presentation habits.</li>
+                    <li>Continue expanding game and web development work.</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const tabButtons = document.querySelectorAll('[data-tab]');
+        const panels = document.querySelectorAll('[data-panel]');
+        const myProjectsButton = document.getElementById('myProjectsButton');
+
+        function setActiveTab(tabName) {
+            tabButtons.forEach((button) => {
+                const isSelected = button.dataset.tab === tabName;
+                button.setAttribute('aria-selected', String(isSelected));
+            });
+
+            panels.forEach((panel) => {
+                panel.classList.toggle('active', panel.dataset.panel === tabName);
+            });
+
+            const target = document.getElementById(tabName);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        tabButtons.forEach((button) => {
+            button.addEventListener('click', () => setActiveTab(button.dataset.tab));
+        });
+
+        document.querySelectorAll('[data-tab-target]').forEach((button) => {
+            button.addEventListener('click', () => setActiveTab(button.dataset.tabTarget));
+        });
+
+        myProjectsButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            setActiveTab('projects');
+        });
+    </script>
 </body>
 </html>
